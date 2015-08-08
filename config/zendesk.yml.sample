@@ -1,0 +1,4 @@
+url: https://yoururl.zendesk.com/api/v2
+username: yourlogin
+password: youtpassword
+retry: true
