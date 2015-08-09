@@ -8,7 +8,6 @@ class Zendesk
       request = {
         subject:      subject,
         priority:     priority,
-        submitter_id: submitter_id,
         comment:      { value: body },
         requester:    { email: email, name: name }
       }
@@ -20,15 +19,21 @@ class Zendesk
     end
 
     def create_ticket args = {}
-      new_ticket(args).save
+      ticket = new_ticket args
+      ticket.save
+      ticket
+    end
+
+    def add_comment_to_ticket ticket_id, comment
+      ticket = client.tickets.find(id: ticket_id)
+      return false unless ticket
+
+      ticket.comment = { body: comment }
+      ticket.save
     end
 
     def client
       Config.zendesk_client
-    end
-
-    def submitter_id
-      Config.zendesk_client.current_user.id
     end
   end
 end
