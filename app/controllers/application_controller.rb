@@ -1,7 +1,5 @@
-require 'sinatra/base'
-
 class ApplicationController < Sinatra::Base
   get '/' do
-    'Teste'
+    erb :index
   end
 end
