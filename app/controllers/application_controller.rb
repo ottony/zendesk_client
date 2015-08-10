@@ -1,14 +1,18 @@
 class ApplicationController < Sinatra::Base
   get '/' do
-    @client = Client.new email: '', name: ''
+    @client = Client.build
     erb :index
   end
 
-  post '/submit' do
+  post '/' do
     @client = Client.new client_params
-    @client.save
 
-    redirect '/obrigado'
+    if @client.save
+      redirect '/obrigado'
+    else
+      @alert = 'Requisição inválida, verifique e tente novamente'
+      erb :index
+    end
   end
 
   get '/obrigado' do

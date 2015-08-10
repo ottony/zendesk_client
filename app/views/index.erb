@@ -1,7 +1,9 @@
-<form method="post" enctype='multipart/form-data' action='/submit'>
-  <input type='email' name='email' placeholder='email'/>
-  <input type='text' name='name' placeholder='name'/>
-  <input type='text' name='cpf' placeholder='cpf'/>
+<%= @alert %>
+
+<form method="post" enctype='multipart/form-data'>
+  <input type='email' name='email' placeholder='email' value='<%= @client.email %>'/>
+  <input type='text' name='name' placeholder='name' value='<%= @client.name %>'/>
+  <input type='text' name='cpf' placeholder='cpf' value='<%= @client.cpf %>'/>
   <input type='file' name='curriculum'/>
   <input type='submit' value='Upload!'/>
 </form>
