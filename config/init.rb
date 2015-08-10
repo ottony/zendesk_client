@@ -10,3 +10,5 @@ Dir['app/**/*.rb'].each { |d| require File.expand_path(d) }
 
 views_dir = File.join( File.expand_path('.'), 'app/views' )
 Sinatra::Base.set :views, views_dir
+
+Config.load!

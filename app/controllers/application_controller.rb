@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
 
   def client_params
     selected = params.select { |k, v| permited_params.include? k.to_sym }
-    selected[:curriculum] = params[:curriculum][:tempfile]
+    selected[:curriculum] = params[:curriculum][:tempfile] if params[:curriculum]
 
     selected.symbolize_keys
   end

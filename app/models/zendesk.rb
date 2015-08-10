@@ -25,14 +25,14 @@ class Zendesk
     end
 
     def add_comment_to_ticket ticket_id, comment
-      ticket = client.tickets.find(id: ticket_id)
+      ticket = api_client.tickets.find(id: ticket_id)
       return false unless ticket
 
       ticket.comment = { body: comment }
       ticket.save
     end
 
-    def client
+    def api_client
       Config.zendesk_client
     end
   end

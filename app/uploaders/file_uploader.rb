@@ -7,11 +7,11 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    File.join File.expand_path( Dir.pwd ), 'public/uploads', dir
+    File.join Config.uploader.store_dir, dir
   end
 
   def cache_dir
-    File.join File.expand_path( Dir.pwd ), 'tmp/uploads'
+    Config.uploader.cache_dir
   end
 
   def filename
