@@ -10,6 +10,10 @@ class FileUploader < CarrierWave::Uploader::Base
     File.join File.expand_path( Dir.pwd ), 'public/uploads', dir
   end
 
+  def cache_dir
+    File.join File.expand_path( Dir.pwd ), 'tmp/uploads'
+  end
+
   def filename
     @new_filename || original_filename
   end

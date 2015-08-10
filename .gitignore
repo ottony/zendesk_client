@@ -1,1 +1,3 @@
 config/zendesk.yml
+public/uploads
+tmp/
