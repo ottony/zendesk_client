@@ -30,4 +30,8 @@ module Config
       cache_dir: cache_dir
     })
   end
+
+  def self.domain
+    'http://vagasempregosrn.com.br/'
+  end
 end

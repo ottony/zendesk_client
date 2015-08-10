@@ -1,5 +1,5 @@
 class Client
-  attr_reader :email, :name, :curriculum, :cpf
+  attr_reader :email, :name, :curriculum, :cpf, :curriculum_file
 
   def self.build
     self.new email: nil, name: nil
@@ -30,13 +30,20 @@ class Client
     return true unless curriculum
 
     uploader = FileUploader.new to_s, curriculum_version
-    file     = File.open( curriculum ) if curriculum.kind_of? String
-    file   ||= curriculum
+    stored   = uploader.store! curriculum
 
-    uploader.store! file
+    Zendesk.create_ticket client: self, download_path: download_path
+
+    stored
+  end
+
+  def download_path
+    File.join Config.domain, curriculum_version 
   end
 
   def curriculum_version
-    "#{ name } - #{ Time.now.strftime('%Y-%m-%d_%H:%M:%S') }"
+    return @curriculum_version unless curriculum
+
+    @curriculum_version ||= "#{ name.to_s.gsub(/\s/, '_') }-#{ Time.now.strftime('%d_%m_%Y-%H_%M_%S') }.#{ curriculum.path[/[^\.]+$/] }"
   end
 end

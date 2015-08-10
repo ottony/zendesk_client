@@ -1,19 +1,21 @@
 class Zendesk
   class << self
-    def new_ticket  email: , name: , body: nil, subject: nil, priority: nil, curriculum: nil
+    def new_ticket  client: , body: nil, subject: nil, priority: nil, upload: false, download_path: nil
       priority ||= 'normal'
-      subject  ||= 'Nova análize pendente'
-      body     ||= 'Gostaria que meu currículo fosse analizado'
+      subject  ||= "#{client.name} - Análise currículo"
+      body     ||= "Gostaria que meu currículo fosse analizado\n"
+      body     <<  "Faça o download aqui: #{ download_path }\n" if download_path
+      body     <<  "Mensagem automática #{Time.now}"
 
       request = {
         subject:      subject,
         priority:     priority,
         comment:      { value: body },
-        requester:    { email: email, name: name }
+        requester:    { email: client.email, name: client.name }
       }
 
-      ticket = ZendeskAPI::Ticket.new(client, request )
-      ticket.comment.uploads << curriculum if curriculum
+      ticket = ZendeskAPI::Ticket.new(api_client, request )
+      ticket.comment.uploads << client.curriculum if upload and client.curriculum
 
       ticket
     end
